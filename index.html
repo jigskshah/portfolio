@@ -64,15 +64,15 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.88);backdrop-fi
 
 /* SCREENSHOT STRIP (featured cards) */
 .fc-screenshot{width:100%;height:180px;overflow:hidden;background:var(--bg3);display:flex;gap:6px;padding:12px;align-items:center}
-.fc-screenshot.fc-banner{padding:0}
-.fc-screenshot.fc-banner img{width:100%;height:100%;object-fit:cover;border-radius:0;box-shadow:none}
+.fc-screenshot.fc-banner{padding:0;background:#fff}
+.fc-screenshot.fc-banner img{width:100%;height:100%;object-fit:contain;border-radius:0;box-shadow:none}
 .fc-screenshot img{height:100%;border-radius:10px;object-fit:cover;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
 .fc-screenshot .no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;opacity:.5}
 .fc-body{padding:1.5rem}
 
 /* SMALL CARD SCREENSHOT */
-.sc-thumb{width:100%;height:120px;overflow:hidden;border-radius:8px;background:var(--bg3);display:flex;gap:4px;padding:8px;margin-bottom:4px;align-items:center}
-.sc-thumb img{height:100%;border-radius:6px;object-fit:cover;flex-shrink:0}
+.sc-thumb{width:100%;height:120px;overflow:hidden;border-radius:8px;background:#fff;display:flex;gap:4px;padding:8px;margin-bottom:4px;align-items:center}
+.sc-thumb img{height:100%;width:100%;border-radius:6px;object-fit:contain;flex-shrink:0}
 .sc-thumb .no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;opacity:.4}
 
 .card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
@@ -316,7 +316,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
   <div class="apps-grid">
 
     <div class="app-card" data-cat="enterprise" onclick="openModal('xhub')">
-      <div class="sc-thumb"><img src="assets/banner/xhub.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Hub banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/xhub.png" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Xperience Hub banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xhub.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Hub logo"></div>
         <div class="card-links">
@@ -330,7 +330,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
       <div class="view-details-btn">View case study</div>
     </div>
     <div class="app-card" data-cat="enterprise" onclick="openModal('xfrontdesk')">
-      <div class="sc-thumb"><img src="assets/banner/xfrontdesk.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience FrontDesk banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/xfrontdesk.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Xperience FrontDesk banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xfrontdesk.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience FrontDesk logo"></div>
         <div class="card-links">
@@ -345,7 +345,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="enterprise" onclick="openModal('xservice')">
-      <div class="sc-thumb"><img src="assets/banner/xservice.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Service banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/xservice.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Xperience Service banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xservice.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Service logo"></div>
         <div class="card-links">
@@ -359,7 +359,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="enterprise logistics" onclick="openModal('xdelivery')">
-      <div class="sc-thumb"><img src="assets/banner/xdelivery.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Delivery banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/xdelivery.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Xperience Delivery banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xdelivery.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Delivery logo"></div>
         <div class="card-links">
@@ -373,7 +373,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="enterprise" onclick="openModal('xscanpro')">
-      <div class="sc-thumb"><img src="assets/banner/xscanpro.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience ScanPro banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/xscanpro.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Xperience ScanPro banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xscanpro.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience ScanPro logo"></div>
         <div class="card-links">
@@ -387,7 +387,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="enterprise" onclick="openModal('xguest')">
-      <div class="sc-thumb"><img src="assets/banner/xguest.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Guest banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/xguest.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Xperience Guest banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xguest.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Guest logo"></div>
         <div class="card-links">
@@ -410,7 +410,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
   <div class="apps-grid">
 
     <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('loom')">
-      <div class="sc-thumb"><img src="assets/banner/loom.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Loom banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/loom.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Loom banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/loom.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Loom logo"></div>
         <div class="card-links">
@@ -425,7 +425,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="enterprise logistics" onclick="openModal('sinq')">
-      <div class="sc-thumb"><img src="assets/banner/sinq.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Sinq banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/sinq.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Sinq banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/sinq.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Sinq logo"></div>
         <div class="card-links">
@@ -507,7 +507,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="consumer community" onclick="openModal('svpc')">
-      <div class="sc-thumb"><img src="assets/banner/svpc.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="SVPC banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/svpc.png" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="SVPC banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/svpc.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="SVPC logo"></div>
         <div class="card-links">
@@ -522,7 +522,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
 
     <div class="app-card" data-cat="consumer enterprise" onclick="openModal('qbank')">
-      <div class="sc-thumb"><img src="assets/banner/qbank.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Qbank banner"></div>
+      <div class="sc-thumb"><img src="assets/banner/qbank.png" style="width:100%;height:100%;object-fit:contain;border-radius:8px" alt="Qbank banner"></div>
       <div class="card-header">
         <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/qbank.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Qbank logo"></div>
         <div class="card-links">
@@ -537,7 +537,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="consumer" onclick="openModal('popularacademy')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
-        <img src="assets/banner/popularacademy.png" style="width:100%;height:100%;object-fit:cover" alt="Popular Defence Academy banner">
+        <img src="assets/banner/popularacademy.png" style="width:100%;height:100%;object-fit:contain" alt="Popular Defence Academy banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/popularacademy.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Popular Defence Academy logo"></div>
@@ -553,7 +553,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="consumer community faith" onclick="openModal('kirtan4u')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
-        <img src="assets/banner/kirtan4u.png" style="width:100%;height:100%;object-fit:cover" alt="Kirtan4u banner">
+        <img src="assets/banner/kirtan4u.png" style="width:100%;height:100%;object-fit:contain" alt="Kirtan4u banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/kirtan4u.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Kirtan4u logo"></div>
@@ -625,7 +625,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="logistics enterprise" onclick="openModal('threestar')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;background:#155fc4;">
-        <img src="assets/banner/threestar.png" style="width:100%;height:100%;object-fit:cover" alt="Three Star Air Cargo banner">
+        <img src="assets/banner/threestar.png" style="width:100%;height:100%;object-fit:contain" alt="Three Star Air Cargo banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#155fc4;padding:0;overflow:hidden;"><img src="assets/logo/threestar.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Three Star Air Cargo logo"></div>
@@ -638,7 +638,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="enterprise" onclick="openModal('saveenergynow')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;background:#1550c9;">
-        <img src="assets/banner/saveenergynow.png" style="width:100%;height:100%;object-fit:cover" alt="Save Energy Now banner">
+        <img src="assets/banner/saveenergynow.png" style="width:100%;height:100%;object-fit:contain" alt="Save Energy Now banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#1550c9;padding:0;overflow:hidden;"><img src="assets/logo/saveenergynow.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Save Energy Now logo"></div>
@@ -676,7 +676,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="fintech" onclick="openModal('orse')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
-        <img src="assets/banner/orse.png" style="width:100%;height:100%;object-fit:cover" alt="ORSE Crypto Wallet banner">
+        <img src="assets/banner/orse.png" style="width:100%;height:100%;object-fit:contain" alt="ORSE Crypto Wallet banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/orse.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="ORSE Crypto Wallet logo"></div>
@@ -693,7 +693,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="fintech" onclick="openModal('ck')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;background:#000;">
-        <img src="assets/banner/ck.jpg" style="width:100%;height:100%;object-fit:cover" alt="CK Crypto Wallet banner">
+        <img src="assets/banner/ck.jpg" style="width:100%;height:100%;object-fit:contain" alt="CK Crypto Wallet banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/ck.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="CK Crypto Wallet logo"></div>
@@ -706,7 +706,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="fintech consumer lifestyle" onclick="openModal('gatherbeing')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
-        <img src="assets/banner/gatherbeing.png" style="width:100%;height:100%;object-fit:cover" alt="Gather Being banner">
+        <img src="assets/banner/gatherbeing.png" style="width:100%;height:100%;object-fit:contain" alt="Gather Being banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/gatherbeing.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Gather Being logo"></div>
@@ -799,7 +799,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="consumer health" onclick="openModal('waterify')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
-        <img src="assets/banner/waterify.png" style="width:100%;height:100%;object-fit:cover" alt="Waterify banner">
+        <img src="assets/banner/waterify.png" style="width:100%;height:100%;object-fit:contain" alt="Waterify banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/waterify.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Waterify logo"></div>
@@ -812,7 +812,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 
     <div class="app-card" data-cat="consumer enterprise" onclick="openModal('shopperswarehouse')">
       <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
-        <img src="assets/banner/shopperswarehouse.png" style="width:100%;height:100%;object-fit:cover" alt="Shoppers Warehouse banner">
+        <img src="assets/banner/shopperswarehouse.png" style="width:100%;height:100%;object-fit:contain" alt="Shoppers Warehouse banner">
       </div>
       <div class="card-header">
         <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/shopperswarehouse.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Shoppers Warehouse logo"></div>
