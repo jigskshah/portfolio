@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Portfolio — Mobile & Web Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#13131a;--bg3:#1c1c26;--card:#181820;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --text:#f0f0f5;--muted:#888899;
+  --accent:#7C6FFF;--accent2:#A78BFA;
+  --tag-bg:rgba(124,111,255,0.12);--tag-color:#a89fff;
+  --green:#34d399;--amber:#fbbf24;--coral:#f87171;--teal:#2dd4bf;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.5px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:13px;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+
+/* HERO */
+.hero{max-width:900px;margin:0 auto;padding:100px 2rem 80px;text-align:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:var(--tag-bg);border:1px solid rgba(167,139,250,0.2);border-radius:100px;padding:6px 16px;margin-bottom:2rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:17px;color:var(--muted);max-width:560px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.stat-item{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;line-height:1}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+
+/* FILTERS */
+.filter-section{max-width:1200px;margin:0 auto;padding:0 2rem 1.5rem}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{background:var(--bg2);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;padding:6px 14px;border-radius:100px;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.filter-btn:hover,.filter-btn.active{background:var(--tag-bg);border-color:rgba(124,111,255,0.4);color:var(--accent2)}
+
+/* GRID */
+.grid-section{max-width:1200px;margin:0 auto;padding:0 2rem 4rem}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+
+/* FEATURED GRID */
+.featured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;margin-bottom:3rem}
+.featured-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s,transform .15s;cursor:pointer}
+.featured-card:hover{border-color:rgba(124,111,255,0.35);transform:translateY(-2px)}
+
+/* APP GRID */
+.apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--border);border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.app-card{background:var(--card);padding:1.5rem;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:background .2s}
+.app-card:hover{background:var(--bg3)}
+.app-card.hidden,.featured-card.hidden{display:none}
+
+/* SCREENSHOT STRIP (featured cards) */
+.fc-screenshot{width:100%;height:180px;overflow:hidden;background:var(--bg3);display:flex;gap:6px;padding:12px;align-items:center}
+.fc-screenshot.fc-banner{padding:0}
+.fc-screenshot.fc-banner img{width:100%;height:100%;object-fit:cover;border-radius:0;box-shadow:none}
+.fc-screenshot img{height:100%;border-radius:10px;object-fit:cover;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.fc-screenshot .no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;opacity:.5}
+.fc-body{padding:1.5rem}
+
+/* SMALL CARD SCREENSHOT */
+.sc-thumb{width:100%;height:120px;overflow:hidden;border-radius:8px;background:var(--bg3);display:flex;gap:4px;padding:8px;margin-bottom:4px;align-items:center}
+.sc-thumb img{height:100%;border-radius:6px;object-fit:cover;flex-shrink:0}
+.sc-thumb .no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;opacity:.4}
+
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-family:'Syne',sans-serif;font-weight:800}
+.card-links{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
+.store-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:4px 8px;border-radius:6px;border:1px solid var(--border2);color:var(--muted);transition:all .2s;letter-spacing:.04em;text-transform:uppercase}
+.store-badge:hover{border-color:var(--accent);color:var(--accent2)}
+.app-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);line-height:1.2}
+.app-desc{font-size:13px;color:var(--muted);line-height:1.6;flex:1}
+.app-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;background:var(--tag-bg);color:var(--tag-color)}
+.tag.platform{background:rgba(52,211,153,0.1);color:#6ee7b7}
+.tag.category{background:rgba(251,191,36,0.1);color:#fde68a}
+.tag.ai{background:rgba(248,113,113,0.1);color:#fca5a5}
+
+.view-details-btn{margin-top:8px;font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:.05em;display:inline-flex;align-items:center;gap:4px}
+.view-details-btn::after{content:'→';transition:transform .2s}
+.app-card:hover .view-details-btn::after,.featured-card:hover .view-details-btn::after{transform:translateX(3px)}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,5,10,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform .25s}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;padding:1rem 1.25rem;background:var(--bg2);border-bottom:1px solid var(--border)}
+.close-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--muted);font-size:13px;padding:6px 14px;border-radius:100px;cursor:pointer;font-family:'Inter',sans-serif;transition:color .2s}
+.close-btn:hover{color:var(--text)}
+
+.modal-hero{padding:2rem 2rem 1.5rem}
+.modal-hero .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:-1px;margin-bottom:.75rem}
+.modal-subtitle{color:var(--muted);font-size:15px;line-height:1.7;max-width:600px;margin-bottom:1.5rem}
+
+/* SCREENSHOTS HORIZONTAL SCROLL */
+.screenshots-section{padding:0 2rem 2rem}
+.screenshots-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.screenshots-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.screenshots-scroll::-webkit-scrollbar{height:4px}
+.screenshots-scroll::-webkit-scrollbar-track{background:transparent}
+.screenshots-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.screenshot-frame{flex-shrink:0;width:160px;height:290px;border-radius:16px;overflow:hidden;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.screenshot-frame img{width:100%;height:100%;object-fit:cover}
+.screenshot-frame .no-ss{font-size:10px;color:var(--muted);opacity:.4;text-align:center;padding:1rem}
+
+/* DETAIL GRID */
+.modal-details{padding:0 2rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.detail-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.detail-card h4{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.detail-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.detail-card li{font-size:13px;color:var(--text);display:flex;align-items:center;gap:8px}
+.detail-card li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.detail-full{grid-column:1/-1}
+
+.modal-links{padding:0 2rem 2rem;display:flex;gap:10px;flex-wrap:wrap}
+.modal-link-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:10px 20px;border-radius:100px;border:1px solid var(--border2);color:var(--text);transition:all .2s;font-family:'Inter',sans-serif;cursor:pointer;background:transparent}
+.modal-link-btn:hover{border-color:var(--accent);background:var(--tag-bg);color:var(--accent2)}
+.modal-link-btn.primary{background:var(--accent);border-color:var(--accent);color:white}
+.modal-link-btn.primary:hover{opacity:.85;color:white}
+
+/* CONTACT */
+.contact-section{max-width:700px;margin:0 auto;padding:4rem 2rem 6rem;text-align:center}
+.contact-section h2{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;letter-spacing:-1px;margin-bottom:1rem}
+.contact-section p{color:var(--muted);margin-bottom:2rem}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:white;font-size:14px;font-weight:600;padding:12px 28px;border-radius:100px;transition:opacity .2s;font-family:'Inter',sans-serif}
+.cta-btn:hover{opacity:.85}
+
+footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;color:var(--muted);font-size:12px}
+
+@media(max-width:640px){
+  nav{padding:0 1rem}.nav-links{display:none}
+  .hero{padding:60px 1rem 50px}.hero h1{font-size:2rem;letter-spacing:-1px}
+  .hero-stats{gap:1.5rem}
+  .filter-section,.grid-section{padding-left:1rem;padding-right:1rem}
+  .apps-grid{grid-template-columns:1fr}
+  .featured-grid{grid-template-columns:1fr}
+  .modal-details{grid-template-columns:1fr}
+  .detail-full{grid-column:1}
+  .modal-hero{padding:1.25rem}
+  .modal-title{font-size:1.5rem}
+  .screenshots-section,.modal-links{padding-left:1.25rem;padding-right:1.25rem}
+}
+
+@media(min-width:641px) and (max-width:1024px){
+  .featured-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">dev<span>.</span>portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#enterprise">Enterprise</a></li>
+    <li><a href="#consumer">Consumer</a></li>
+    <li><a href="#fintech">Fintech</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Available for new projects</div>
+  <h1>Apps that<br>ship and <em>scale</em></h1>
+  <p>A track record of building mobile and web products across enterprise SaaS, consumer, fintech, health, and logistics — end to end, from concept to store.</p>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">35+</div><div class="stat-label">Apps Shipped</div></div>
+    <div class="stat-item"><div class="stat-num">iOS & Android</div><div class="stat-label">Dual Platform</div></div>
+    <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Verticals</div></div>
+    <div class="stat-item"><div class="stat-num">Flutter</div><div class="stat-label">Primary Stack</div></div>
+  </div>
+</section>
+
+<div class="filter-section">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All Apps</button>
+    <button class="filter-btn" onclick="filterCards('enterprise',this)">Enterprise</button>
+    <button class="filter-btn" onclick="filterCards('consumer',this)">Consumer</button>
+    <button class="filter-btn" onclick="filterCards('fintech',this)">Fintech</button>
+    <button class="filter-btn" onclick="filterCards('health',this)">Health & Wellness</button>
+    <button class="filter-btn" onclick="filterCards('logistics',this)">Logistics</button>
+    <button class="filter-btn" onclick="filterCards('lifestyle',this)">Lifestyle</button>
+  </div>
+</div>
+
+<!-- ===== ENTERPRISE FEATURED ===== -->
+<div class="grid-section" id="enterprise">
+  <div class="section-label">Featured — Enterprise & Workplace</div>
+  <div class="featured-grid">
+
+    <div class="featured-card" data-cat="enterprise" onclick="openModal('arcc')">
+      <div class="fc-screenshot fc-banner">
+        <img src="assets/banner/arcc.jpg" alt="ARCC banner">
+      </div>
+      <div class="fc-body">
+        <div class="card-header">
+          <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/arcc.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="ARCC logo"></div>
+          <div class="card-links">
+            <a href="https://play.google.com/store/apps/details?id=com.arccinnovations.e2podapp" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+            <a href="https://apps.apple.com/us/app/arcc-control/id6754162285" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          </div>
+        </div>
+        <div class="app-name" style="margin-top:.75rem">ARCC Control</div>
+        <div class="app-desc" style="margin-top:4px">IoT control and monitoring for ARCC Innovations' E2 pod ecosystem. Energy management, consumption analytics, and real-time alerts.</div>
+        <div class="app-tags" style="margin-top:8px">
+          <span class="tag platform">iOS & Android</span><span class="tag category">IoT / Energy</span><span class="tag">Flutter</span>
+        </div>
+        <div class="view-details-btn" style="margin-top:12px">View case study</div>
+      </div>
+    </div>
+
+    <div class="featured-card" data-cat="consumer health" onclick="openModal('ove')">
+      <div class="fc-screenshot fc-banner">
+        <img src="assets/banner/ove.jpg" alt="Ove banner">
+      </div>
+      <div class="fc-body">
+        <div class="card-header">
+          <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/ove.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Ove logo"></div>
+          <div class="card-links">
+            <a href="https://apps.apple.com/us/app/ove-period-app-for-teens/id6502988001" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+            <a href="https://play.google.com/store/apps/details?id=com.ove" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          </div>
+        </div>
+        <div class="app-name" style="margin-top:.75rem">Ove — Period App for Teens</div>
+        <div class="app-desc" style="margin-top:4px">AI-powered menstrual wellness platform. Personalised insights, health-grade privacy, and a conversational companion built for teens. Flutter + OpenAI, 18 weeks.</div>
+        <div class="app-tags" style="margin-top:8px">
+          <span class="tag platform">iOS & Android</span><span class="tag category">Women's Health</span><span class="tag ai">AI / OpenAI</span>
+        </div>
+        <div class="view-details-btn" style="margin-top:12px">View case study</div>
+      </div>
+    </div>
+
+    <div class="featured-card" data-cat="consumer health" onclick="openModal('mbm')">
+      <div class="fc-screenshot fc-banner">
+        <img src="assets/banner/mbm.jpg" alt="My Best Mood banner">
+      </div>
+      <div class="fc-body">
+        <div class="card-header">
+          <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/mbm.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="My Best Mood logo"></div>
+          <div class="card-links">
+            <a href="https://apps.apple.com/us/app/my-best-mood-app/id6758455372" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+            <a href="https://play.google.com/store/apps/details?id=com.mybestmood.app" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          </div>
+        </div>
+        <div class="app-name" style="margin-top:.75rem">My Best Mood</div>
+        <div class="app-desc" style="margin-top:4px">AI-powered child support and storytelling platform. 3-layer structured prompt architecture for narrative coherence, emotional safety, and age-appropriate responses. 18 weeks.</div>
+        <div class="app-tags" style="margin-top:8px">
+          <span class="tag platform">iOS & Android</span><span class="tag category">Child Wellness</span><span class="tag ai">AI / OpenAI</span>
+        </div>
+        <div class="view-details-btn" style="margin-top:12px">View case study</div>
+      </div>
+    </div>
+
+    <div class="featured-card" data-cat="consumer lifestyle" onclick="openModal('lostfound')">
+      <div class="fc-screenshot fc-banner">
+        <img src="assets/banner/lostfound.jpg" alt="Lost and Found banner">
+      </div>
+      <div class="fc-body">
+        <div class="card-header">
+          <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/lostfound.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Lost and Found logo"></div>
+          <div class="card-links">
+            <a href="https://apps.apple.com/us/app/lost-and-found-crew/id6742314679" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+            <a href="https://play.google.com/store/apps/details?id=com.lostandfoundcrew" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          </div>
+        </div>
+        <div class="app-name" style="margin-top:.75rem">Lost & Found Crew</div>
+        <div class="app-desc" style="margin-top:4px">Geospatial recovery platform connecting item finders with owners. Verified claims, secure handoffs, Stripe reward flows. Flutter + Node.js + MongoDB. 16 weeks.</div>
+        <div class="app-tags" style="margin-top:8px">
+          <span class="tag platform">iOS & Android</span><span class="tag category">Community</span><span class="tag">Geospatial</span><span class="tag">Stripe</span>
+        </div>
+        <div class="view-details-btn" style="margin-top:12px">View case study</div>
+      </div>
+    </div>
+
+    <div class="featured-card" data-cat="fintech" onclick="openModal('lotusx')">
+      <div class="fc-screenshot fc-banner">
+        <img src="assets/banner/lotusx.jpg" alt="LotusX banner">
+      </div>
+      <div class="fc-body">
+        <div class="card-header">
+          <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/lotusx.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="LotusX logo"></div>
+          <div class="card-links">
+            <a href="https://apps.apple.com/in/app/lotusx-buy-bitcoin-crypto/id6449375786" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+            <a href="https://play.google.com/store/apps/details?id=com.lotusx.global" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          </div>
+        </div>
+        <div class="app-name" style="margin-top:.75rem">LotusX — Crypto Exchange</div>
+        <div class="app-desc" style="margin-top:4px">Cryptocurrency exchange for buying and trading Bitcoin and digital assets. Real-time order books, secure wallet integration, and simplified onboarding for first-time crypto users.</div>
+        <div class="app-tags" style="margin-top:8px">
+          <span class="tag platform">iOS & Android</span><span class="tag category">Crypto Exchange</span><span class="tag">Blockchain</span>
+        </div>
+        <div class="view-details-btn" style="margin-top:12px">View case study</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- XPERIENCE SUITE -->
+<div class="grid-section">
+  <div class="section-label">Xperience Suite — aeria.world</div>
+  <div class="apps-grid">
+
+    <div class="app-card" data-cat="enterprise" onclick="openModal('xhub')">
+      <div class="sc-thumb"><img src="assets/banner/xhub.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Hub banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xhub.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Hub logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=world.aeria.employee" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/us/app/aeria-experience/id6739497997" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">Xperience Hub</div>
+      <div class="app-desc">All-in-one workplace experience platform — visitor management, desk booking, service requests, building controls, community, deals, and food ordering.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Workplace SaaS</span><span class="tag">Flutter</span></div>
+      <div class="view-details-btn">View case study</div>
+    </div>
+    <div class="app-card" data-cat="enterprise" onclick="openModal('xfrontdesk')">
+      <div class="sc-thumb"><img src="assets/banner/xfrontdesk.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience FrontDesk banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xfrontdesk.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience FrontDesk logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=world.aeria.tenant.reception" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/us/app/xperience-frontdesk/id6748072374" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">Xperience FrontDesk</div>
+      <div class="app-desc">Smart front-desk app for receptionists and security staff — visitor invites, delivery logging, cab management, and digital gate passes with real-time sync to the employee platform.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Visitor Mgmt</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="enterprise" onclick="openModal('xservice')">
+      <div class="sc-thumb"><img src="assets/banner/xservice.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Service banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xservice.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Service logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=world.aeria.service" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Xperience Service</div>
+      <div class="app-desc">Operations app for guards, technicians, and supervisors — visitor validation, patrol scheduling, SOS response, and complaint resolution in one place.</div>
+      <div class="app-tags"><span class="tag platform">Android</span><span class="tag category">Field Service</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="enterprise logistics" onclick="openModal('xdelivery')">
+      <div class="sc-thumb"><img src="assets/banner/xdelivery.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Delivery banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xdelivery.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Delivery logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=world.aeria.delivery" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Xperience Delivery</div>
+      <div class="app-desc">Purpose-built for campus delivery runners — manage parcels, plan trips, track drop-offs in real time across office buildings and floors.</div>
+      <div class="app-tags"><span class="tag platform">Android</span><span class="tag category">Delivery Ops</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="enterprise" onclick="openModal('xscanpro')">
+      <div class="sc-thumb"><img src="assets/banner/xscanpro.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience ScanPro banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xscanpro.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience ScanPro logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=world.aeria.scanner" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Xperience ScanPro</div>
+      <div class="app-desc">Smarter event and amenity access control — instantly scan QR tickets, verify guests, and track attendance with ease.</div>
+      <div class="app-tags"><span class="tag platform">Android</span><span class="tag category">Asset Scanning</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="enterprise" onclick="openModal('xguest')">
+      <div class="sc-thumb"><img src="assets/banner/xguest.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Xperience Guest banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/xguest.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Xperience Guest logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=world.aeria.vms.selfservice" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/us/app/xperience-guest/id6774579789" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">Xperience Guest</div>
+      <div class="app-desc">Tablet-first self-service check-in kiosk for corporate lobbies — OTP verification, configurable visitor flows, photo/ID capture, and privacy-mode auto-reset.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">VMS Self-Service</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONSUMER -->
+<div class="grid-section" id="consumer">
+  <div class="section-label">Consumer Apps</div>
+  <div class="apps-grid">
+
+    <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('loom')">
+      <div class="sc-thumb"><img src="assets/banner/loom.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Loom banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/loom.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Loom logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/us/app/loom-redesign-your-wardrobe/id6738835932" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.loomapp" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Loom — Redesign Your Wardrobe</div>
+      <div class="app-desc">Connect with 100+ vetted designers to redesign unworn clothes — dye, alter, embroider, or completely transform items into something new.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Fashion</span><span class="tag ai">AI-Powered</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="enterprise logistics" onclick="openModal('sinq')">
+      <div class="sc-thumb"><img src="assets/banner/sinq.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="Sinq banner"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/sinq.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Sinq logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=com.sinq" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/us/app/sinq/id6741070388" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">Sinq</div>
+      <div class="app-desc">Social sync and community networking. Find and connect with people who share your interests and real-time plans.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Social</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('freefree')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/freefree.jpg" alt="FF World Club banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="assets/logo/freefree.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="FreeFree logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=com.freefree" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">FF World Club</div>
+      <div class="app-desc">Award-winning global membership club for consciousness, meditation, and leadership — weekly methodology classes, global community, and impact tools.</div>
+      <div class="app-tags"><span class="tag platform">Android</span><span class="tag category">Marketplace</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer enterprise" onclick="openModal('worktogether')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/worktogether.png" alt="Work Together banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/worktogether.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Work Together logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/us/app/together-techs-anon-network/id6455621588" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=io.worktogether.app" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Work Together</div>
+      <div class="app-desc">Anonymous professional network for tech teams — challenges, advice, and opportunities in a verified pseudonymous community.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Pro Network</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('beanthere')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/beanthere.jpg" alt="Bean There banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/beanthere.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Bean There logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/bean-there-camping/id1598634935" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.beanthereapp" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Bean There — Camping</div>
+      <div class="app-desc">Campsite discovery and trip planning with peer reviews, saved spots, and gear checklists for outdoor adventures.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Outdoor & Travel</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('brandkit')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/brandkit.jpg" alt="BrandKit banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/brandkit.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="BrandKit logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=com.brandkit.post" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/in/app/brandkit-post-video-maker/id1639090890" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">BrandKit</div>
+      <div class="app-desc">Social media content and video maker. Apply brand identity to templates and export polished posts instantly.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Marketing</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LOGISTICS -->
+<div class="grid-section" id="logistics">
+  <div class="section-label">Logistics & Transport</div>
+  <div class="apps-grid">
+
+    <div class="app-card" data-cat="logistics" onclick="openModal('pulpit')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/pulpit.jpg" alt="Pulpit Partner banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/pulpit.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Pulpit Partner logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/pulpit-partner/id6444733582" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.pulpit.travel_driver_pulpit" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Pulpit Partner (Driver)</div>
+      <div class="app-desc">Driver-side ride app — bookings, navigation, earnings tracking, and ride history in one screen.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Ride-Sharing</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="logistics consumer" onclick="openModal('pulpituser')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/pulpituser.jpg" alt="Pulpit User banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/pulpituser.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Pulpit User logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/pulpit-supermarket-of-rides/id6444613022" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.pulpit.pulpit_customer" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Pulpit User</div>
+      <div class="app-desc">Ride booking marketplace — compare transport options, track drivers live, and compare fares across categories.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Ride Booking</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="logistics" onclick="openModal('towerland')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/towerland.jpg" alt="TöwerLand Express banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#1a7fb3;padding:0;overflow:hidden;"><img src="assets/logo/towerland.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="TöwerLand Express logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/t%C3%B6werland-express/id1481947676" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=ag.conit.te_juist" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">TöwerLand Express</div>
+      <div class="app-desc">Island ferry booking for Juist, Germany — timetables, ticket booking, and real-time departure notifications.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Ferry / Transit</span><span class="tag">Germany</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FINTECH -->
+<div class="grid-section" id="fintech">
+  <div class="section-label">Fintech & Crypto</div>
+  <div class="apps-grid">
+
+    <div class="app-card" data-cat="fintech" onclick="openModal('dlt')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/dlt.jpg" alt="DLT Token Wallet banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/dlt.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="DLT Token Wallet logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=com.dltwalletapp" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/us/app/dlt-wallet-i-nfts-crypto/id6466737727" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">DLT Token Wallet</div>
+      <div class="app-desc">Non-custodial DLT token wallet with biometric auth, send/receive flows, and security-first architecture.</div>
+      <div class="app-tags"><span class="tag platform">Android</span><span class="tag category">Crypto Wallet</span><span class="tag">Blockchain</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="fintech" onclick="openModal('orse')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/orse.png" style="width:100%;height:100%;object-fit:cover" alt="ORSE Crypto Wallet banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/orse.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="ORSE Crypto Wallet logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=com.orse" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+          <a href="https://apps.apple.com/us/app/orse-crypto-wallet/id6746813684" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+        </div>
+      </div>
+      <div class="app-name">ORSE Crypto Wallet</div>
+      <div class="app-desc">Decentralized gaming crypto wallet for the ORSEGAMES ecosystem — gasless transactions, NFT support, staking, and cross-game asset management.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">GameFi Wallet</span><span class="tag">Blockchain</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="fintech" onclick="openModal('ck')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;background:#000;">
+        <img src="assets/banner/ck.jpg" style="width:100%;height:100%;object-fit:cover" alt="CK Crypto Wallet banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#000;padding:0;overflow:hidden;"><img src="assets/logo/ck.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="CK Crypto Wallet logo"></div>
+      </div>
+      <div class="app-name">CK Crypto Wallet</div>
+      <div class="app-desc">A user-friendly, security-first wallet for storing, sending, and receiving BEP-20 tokens with real-time portfolio tracking and price alerts.</div>
+      <div class="app-tags"><span class="tag platform">Mobile</span><span class="tag category">Crypto Wallet</span><span class="tag">BEP-20</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- E-COMMERCE -->
+<div class="grid-section">
+  <div class="section-label">E-Commerce, Hospitality & Lifestyle</div>
+  <div class="apps-grid">
+
+    <div class="app-card" data-cat="enterprise logistics" onclick="openModal('beds24')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/beds24.jpg" alt="Beds24 banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/beds24.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Beds24 logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/beds24/id1637083171" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.beds24" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Beds24</div>
+      <div class="app-desc">Property management system mobile companion — bookings, calendars, rates, and guest messaging for hosts.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Hospitality PMS</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('bellelon')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/bellelon.jpg" alt="Bellelon banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/bellelon.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Bellelon logo"></div>
+        <div class="card-links">
+          <a href="https://play.google.com/store/apps/details?id=com.bellelon.consumer" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Consumer</a>
+          <a href="https://play.google.com/store/apps/details?id=com.bellelon.business" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Business</a>
+        </div>
+      </div>
+      <div class="app-name">Bellelon</div>
+      <div class="app-desc">Dual-sided beauty marketplace — consumers book professionals, businesses manage appointments and client records.</div>
+      <div class="app-tags"><span class="tag platform">Android</span><span class="tag category">Beauty</span><span class="tag">Dual-Sided</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer" onclick="openModal('naturalaqua')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/naturalaqua.jpg" alt="Natural Aqua banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/naturalaqua.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Natural Aqua logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/naturalaqua/id1583036162" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.naturalaquaapp" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Natural Aqua</div>
+      <div class="app-desc">Water purification subscription delivery — order bottles, schedule recurring deliveries, track orders, and manage dispensers.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Subscription</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+    <div class="app-card" data-cat="consumer lifestyle" onclick="openModal('riva')">
+      <div class="fc-screenshot fc-banner" style="margin:-1.5rem -1.5rem 0 -1.5rem;width:calc(100% + 3rem);height:140px;">
+        <img src="assets/banner/riva.jpg" alt="Riva banner">
+      </div>
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff;padding:0;overflow:hidden;"><img src="assets/logo/riva.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="Riva logo"></div>
+        <div class="card-links">
+          <a href="https://apps.apple.com/in/app/rivaapp/id1588403141" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">⬡ iOS</a>
+          <a href="https://play.google.com/store/apps/details?id=com.riva" target="_blank" onclick="e=event||window.event;e.stopPropagation()" class="store-badge">▶ Play</a>
+        </div>
+      </div>
+      <div class="app-name">Riva</div>
+      <div class="app-desc">Lifestyle super-app for cleaning, repairs, personal wellness, and concierge services with vetted professionals and in-app payments.</div>
+      <div class="app-tags"><span class="tag platform">iOS & Android</span><span class="tag category">Super-App</span></div>
+      <div class="view-details-btn">View details</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <h2>Let's build your next app</h2>
+  <p>From product strategy to App Store submission — end-to-end Flutter development with a proven track record across 12+ verticals.</p>
+  <a href="mailto:hello@empyrealinfotech.com" class="cta-btn">Start a conversation →</a>
+  <div style="margin-top:2.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="https://www.empyrealinfotech.com/" target="_blank" class="store-badge" style="padding:8px 16px;font-size:12px">↗ empyrealinfotech.com</a>
+    <a href="https://www.aeria.world/" target="_blank" class="store-badge" style="padding:8px 16px;font-size:12px">↗ aeria.world</a>
+    <a href="https://lotusx.global/" target="_blank" class="store-badge" style="padding:8px 16px;font-size:12px">↗ lotusx.global</a>
+  </div>
+</div>
+
+<footer>
+  <p>Portfolio — Mobile & Web App Development &nbsp;·&nbsp; Flutter · React Native · Node.js · iOS & Android</p>
+</footer>
+
+<!-- ===================== MODAL ===================== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-close">
+      <button class="close-btn" onclick="closeModal()">✕ Close</button>
+    </div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+// ---- APP DATA ----
+const apps = {
+  xhub:{
+    name:"Xperience Hub",icon:'<img src="assets/logo/xhub.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#a89fff",
+    category:"Enterprise · Workplace SaaS",
+    tagline:"All-in-one workplace experience platform for modern offices and co-working spaces.",
+    description:"Aeria Experience (Xperience Hub) is an all-in-one tenant experience platform built for commercial real estate. It gives corporate users a single app to manage building access and visitor entries, book parking and amenities like gyms and meeting rooms, report and track complaints in real time, discover exclusive deals and events, access shuttle and carpool services, and trigger emergency SOS requests instantly. Role-based experiences serve employees, tenant admins, and developer admins, with analytics dashboards for the admin side.",
+    timeline:"Ongoing",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase","REST APIs","IoT Integration"],
+    features:["QR code-based building access for entry/exit","Visitor pre-approval and seamless invite flow","Amenity booking — gyms, meeting rooms, parking","Real-time complaint reporting and tracking","Community feed — notices, polls, surveys, buzz","Events booking (sports screenings, mixers, etc.)","Food court ordering with deliver-to-desk","Exclusive deals & offers from partner outlets","Emergency SOS trigger","Admin analytics dashboards for tenant & developer admins"],
+    screenshots:[
+"assets/screenshots/xhub/1.png",
+"assets/screenshots/xhub/2.png",
+"assets/screenshots/xhub/3.png",
+"assets/screenshots/xhub/4.png",
+"assets/screenshots/xhub/5.png",
+"assets/screenshots/xhub/6.png",
+"assets/screenshots/xhub/7.png",
+"assets/screenshots/xhub/8.png"
+],
+    links:[
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=world.aeria.employee"},
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/aeria-experience/id6739497997"},
+      {label:"↗ aeria.world",url:"https://www.aeria.world/"}
+    ]
+  },
+  xfrontdesk:{
+    name:"Xperience FrontDesk",icon:'<img src="assets/logo/xfrontdesk.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#5eead4",
+    category:"Enterprise · Visitor Management",
+    tagline:"Smart front-desk app for corporate offices — visitor management, deliveries, cabs, and gate passes in one place.",
+    description:"Xperience FrontDesk (Xperience Desk) is a smart front-desk application designed exclusively for corporate offices. It empowers receptionists, security desks, and administrative staff to manage the flow of people and deliveries with ease, speed, and accountability. Connected to the Xperience Hub TeX employee platform for real-time visibility across the premises. Built with privacy-first design, compliant with the Indian DPDP Act, 2023. Developed by AeriaX Ventures Pvt. Ltd.",
+    timeline:"2024",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase","Label Printing APIs","Employee Directory Integration","DPDP Compliant Architecture"],
+    features:["Visitor Invitations: create and manage invites on behalf of employees","Approve and validate walk-in visitors with ID capture","Seamless integration with employee directory for quick host selection","Delivery & Courier: log parcels with recipient notifications, sender name, and handover details","Cab Entry/Exit: log cab arrivals and maintain a digital record of all vehicle movements","Gate Pass Issuance: issue digital gate passes with auto-expiry and full audit trail","Real-time sync with the Xperience Hub TeX employee platform","Admins can track who is inside the premises at any time","Role-based access control and real-time activity logs"],
+    screenshots:["assets/screenshots/xfrontdesk/1.jpg","assets/screenshots/xfrontdesk/2.png","assets/screenshots/xfrontdesk/3.png","assets/screenshots/xfrontdesk/4.png"],
+    links:[
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=world.aeria.tenant.reception"},
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/xperience-frontdesk/id6748072374"}
+    ]
+  },
+  xservice:{
+    name:"Xperience Service",icon:'<img src="assets/logo/xservice.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#fde68a",
+    category:"Enterprise · Field Service Management",
+    tagline:"Operations app for security guards, technicians, and supervisors in commercial real estate buildings.",
+    description:"Xperience Service is the operations app for security guards, technicians, and supervisors in commercial real estate buildings. It unifies visitor management, patrol scheduling, emergency SOS response, and service complaint resolution into one intuitive interface — giving every member of the building operations team exactly what they need to maintain a safe, secure, and efficient environment for all occupants.",
+    timeline:"2024",platform:"Android",stack:["Flutter","Node.js","Firebase","Camera APIs"],
+    features:["Visitor Management: validate pre-approved visitors, cabs, and deliveries at the gate","Register walk-in visitors, notify hosts, and seek approval in real time","Validate gate passes and manage itemised exits securely","Mark entry and exit of all visitors, deliveries, and cabs","Patrol & Emergency: schedule and mark guard patrols for enhanced security","Instant SOS response — swift action during emergencies raised by building users","Service Staff: accept and resolve complaints across electrical, plumbing, and more","Update complaint status and close tickets upon resolution"],
+    screenshots:["assets/screenshots/xservice/1.jpg","assets/screenshots/xservice/2.png","assets/screenshots/xservice/3.png","assets/screenshots/xservice/4.png"],
+    links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=world.aeria.service"}]
+  },
+  xdelivery:{
+    name:"Xperience Delivery",icon:'<img src="assets/logo/xdelivery.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#fca5a5",
+    category:"Enterprise · Delivery & Logistics",
+    tagline:"Purpose-built for delivery runners on office campuses — manage parcels, runs, and drop-offs with real-time updates.",
+    description:"Xperience Delivery is a purpose-built app for delivery runners operating within office campuses and commercial parks. Runners manage assigned parcels, complete delivery runs efficiently, and ensure timely drop-offs across buildings and floors. Unlike public delivery apps, this is optimised for controlled private environments — office parks, IT campuses, and gated commercial properties. Access is provided by authorised administrators only.",
+    timeline:"2024",platform:"Android",stack:["Flutter","Node.js","Firebase","Barcode Scanning"],
+    features:["View and manage all assigned delivery tasks in one dashboard","Start and complete multi-parcel delivery runs","Clear pickup and drop-off details with building and location info","Update delivery status in real time — picked up, in transit, delivered","Smart trip planning with live updates on stations, detours, and delays","Effortless parcel handover — claim parcels and complete deliveries without confusion","Structured task flows to reduce delivery errors and missed drop-offs","Runner-friendly interface built for speed and clarity on campus"],
+    screenshots:["assets/screenshots/xdelivery/1.jpg","assets/screenshots/xdelivery/2.jpg","assets/screenshots/xdelivery/3.jpg","assets/screenshots/xdelivery/4.jpg"],
+    links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=world.aeria.delivery"}]
+  },
+  xscanpro:{
+    name:"Xperience ScanPro",icon:'<img src="assets/logo/xscanpro.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#a89fff",
+    category:"Enterprise · Asset & Package Scanning",
+    tagline:"Professional QR ticket verification for events and amenity access in office parks and commercial campuses.",
+    description:"Xperience ScanPro is a professional QR ticket verification app for event and amenity access management within office parks and commercial campuses. Authorised staff scan and validate QR-based tickets for corporate events, community activities, amenity bookings, and office park programmes. Built strictly for on-ground access verification by authorised personnel — no payments, no public ticket purchases, no consumer use.",
+    timeline:"2024",platform:"Android",stack:["Flutter","ML Kit","Node.js","Firebase"],
+    features:["Fast and accurate QR code scanning for event tickets and amenity bookings","Real-time ticket validation with instant guest verification","Entry intelligence — instant guest ID, entry logs, and category-based attendance tracking","Supports corporate events, community activities, and amenity access","Distraction-free interface designed for operational staff","Real-time entry logs with attendee count inside / outside","Authorised-personnel-only access — no public use or payment processing"],
+    screenshots:["assets/screenshots/xscanpro/1.jpg","assets/screenshots/xscanpro/2.jpg","assets/screenshots/xscanpro/3.jpg","assets/screenshots/xscanpro/4.jpg"],
+    links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=world.aeria.scanner"}]
+  },
+  xguest:{
+    name:"Xperience Guest",icon:'<img src="assets/logo/xguest.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#6ee7b7",
+    category:"Enterprise · Self-Service VMS",
+    tagline:"Visitor self-check-in kiosk with NDA capture and host notifications.",
+    description:"Xperience Guest is a tablet-first self-service visitor check-in app for modern workplaces, business parks, reception lobbies, and enterprise campuses. Walk-in and pre-approved visitors independently complete their registration on a shared reception tablet — reducing congestion and minimising manual intervention. Deployed at reception desks, gates, and lobby checkpoints, with a privacy-focused kiosk mode that auto-resets on inactivity. Multi-checkpoint deployment supported; configurable by security supervisors per property.",
+    timeline:"2024",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase","DocuSign integration"],
+    features:["Self-service visitor registration directly from the kiosk tablet","OTP-based identity verification via email or mobile","Smart host search — dynamic searchable dropdowns for companies and employees","Fully configurable visitor flow: purpose, photograph, ID proof, email, phone","Photo and ID document capture from the tablet camera","QR code scan to continue check-in on visitor's own mobile device","Tablet-first responsive design with optimised touch interactions","Privacy-focused kiosk mode — inactivity timeout clears data and resets to home","Multi-checkpoint deployment across gates, receptions, and lobby locations"],
+    screenshots:["assets/screenshots/xguest/1.jpg","assets/screenshots/xguest/2.png","assets/screenshots/xguest/3.png","assets/screenshots/xguest/4.png"],
+    links:[
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=world.aeria.vms.selfservice"},
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/xperience-guest/id6774579789"}
+    ]
+  },
+  arcc:{
+    name:"ARCC Control",icon:'<img src="assets/logo/arcc.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#5eead4",
+    category:"Enterprise · IoT / Energy Management",
+    tagline:"IoT monitoring and control platform for ARCC Innovations' E2 pod ecosystem.",
+    description:"The ARCC Control app works with the ARCC Intelligent Drive System to provide full control of your e-bike's power, mode, and lighting settings. Current ride data — speed, cadence, distance, and elevation — is displayed in real time. Mapping functions allow routes to be planned and followed, and rides are recorded to build a full activity history. Bluetooth pairing, settings configuration, feedback submission, and in-app support are all built in.",
+    timeline:"2024",platform:"iOS & Android",stack:["Flutter","Node.js","MQTT","IoT APIs","Firebase"],
+    features:["Full e-bike power, mode, and lighting control via Bluetooth","Real-time ride data — speed, cadence, distance, elevation","Route planning and turn-by-turn navigation","Ride recording and activity history with stats","Bluetooth pairing with guided setup steps","Settings: units, rider details, display preferences","Feedback and support submission with attachments","Range display and assist status on nav screen"],
+    screenshots:["assets/screenshots/arcc/1.jpg","assets/screenshots/arcc/2.jpg","assets/screenshots/arcc/3.jpg","assets/screenshots/arcc/4.jpg","assets/screenshots/arcc/5.jpg","assets/screenshots/arcc/6.jpg","assets/screenshots/arcc/7.jpg","assets/screenshots/arcc/8.jpg","assets/screenshots/arcc/9.jpg"],
+    links:[
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.arccinnovations.e2podapp"},
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/arcc-control/id6754162285"},
+      {label:"↗ arccinnovations.com",url:"https://www.arccinnovations.com/"},
+      {label:"↗ Case Study",url:"https://www.empyrealinfotech.com/case-studies/arcc",primary:true}
+    ]
+  },
+  ove:{
+    name:"Ove — Period App for Teens",icon:'<img src="assets/logo/ove.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#fca5a5",
+    category:"Consumer · Women's Health · AI",
+    tagline:"AI-powered menstrual wellness companion built for teenagers. Flutter + OpenAI, 18 weeks.",
+    description:"Ove is not another calendar with colour-coded dots. The brief was a companion that listens, learns, and responds with the warmth and clinical accuracy the category has been missing. Built with health-grade data privacy, a structured AI prompt architecture that prevents clinical drift, and a conversational assistant that gives personalised cycle insights rather than generic horoscope-level advice.",
+    timeline:"18 weeks",platform:"iOS & Android",stack:["Flutter","Node.js","OpenAI","MongoDB","Subscription Architecture"],
+    features:["Personalised cycle and symptom tracking","Structured AI prompt architecture — zero clinical drift","Conversational wellness assistant","Health-grade data privacy (encryption at rest + transit)","Subscription billing with free tier","Age-appropriate UX designed for teens"],
+    screenshots:[
+"assets/screenshots/ove/1.jpg",
+"assets/screenshots/ove/2.jpg",
+"assets/screenshots/ove/3.jpg",
+"assets/screenshots/ove/4.jpg",
+"assets/screenshots/ove/5.jpg",
+"assets/screenshots/ove/6.jpg",
+"assets/screenshots/ove/7.jpg"
+],
+    links:[
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/ove-period-app-for-teens/id6502988001"},
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.ove"},
+      {label:"↗ ovecare.com",url:"https://ovecare.com/"},
+      {label:"↗ Case Study",url:"https://www.empyrealinfotech.com/case-studies/ove-care",primary:true}
+    ]
+  },
+  mbm:{
+    name:"My Best Mood",icon:'<img src="assets/logo/mbm.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#fde68a",
+    category:"Consumer · Child Wellness · AI",
+    tagline:"Creative wellbeing app for children aged 8–15 — journaling, storytelling, and emotional reflection in a calm, pressure-free space.",
+    description:"My Best Mood is a creative wellbeing app supporting children in expressing emotions, building confidence, and developing emotional awareness. It provides a calm, pressure-free digital space where children explore feelings through journaling, storytelling, and simple reflection tools — no scoring, comparison, or public interaction. Suitable for ages 8–15, and particularly supportive for neurodivergent and emotionally sensitive young people. Not a medical or diagnostic tool; designed for everyday emotional wellbeing and self-expression.",
+    timeline:"18 weeks",platform:"iOS & Android",stack:["Flutter","Node.js","OpenAI","MongoDB","Structured Prompt Architecture"],
+    features:["Layer 1: Emotional support chat with isolated safety system prompt","Layer 2: Story planning with persistent character and narrative arc","Layer 3: Generation with plan + history anchoring at every step","Zero story drift across multi-chapter sessions","Age-appropriate content filtering at model layer","Session parameter enforcement (length, tone, theme)"],
+    screenshots:["assets/screenshots/mbm/1.jpg"],
+    links:[
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/my-best-mood-app/id6758455372"},
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.mybestmood.app"},
+      {label:"↗ Case Study",url:"https://www.empyrealinfotech.com/case-studies/mbm",primary:true}
+    ]
+  },
+  lostfound:{
+    name:"Lost & Found Crew",icon:'<img src="assets/logo/lostfound.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#6ee7b7",
+    category:"Consumer · Community · Geospatial",
+    tagline:"Geospatial recovery platform connecting finders with owners through verified claims and reward flows. 16 weeks.",
+    description:"Lost & Found solves the trust gap in item recovery: finders worry about liability, owners worry about fraudulent claims. The platform's verification system lets owners prove ownership through known-detail challenges without cross-examination friction. Geographic and category-based matching alerts potential matches in real time. Stripe handles reward payouts cleanly when they're involved.",
+    timeline:"16 weeks",platform:"iOS & Android",stack:["Flutter","Node.js","MongoDB","Firebase","Stripe","Geospatial APIs"],
+    features:["Dual-journey UX mapped for finders and owners separately","Known-detail verification system for legitimate claims","Geospatial + category-based real-time matching","In-app encrypted messaging before handoff confirmation","Stripe reward payout integration","Privacy-preserving location handling"],
+    screenshots:["assets/screenshots/lostfound/1.jpg","assets/screenshots/lostfound/2.jpg","assets/screenshots/lostfound/3.png","assets/screenshots/lostfound/4.jpg","assets/screenshots/lostfound/5.jpg","assets/screenshots/lostfound/6.jpg","assets/screenshots/lostfound/7.jpg","assets/screenshots/lostfound/8.jpg"],
+    links:[
+      {label:"⬡ App Store",url:"https://apps.apple.com/us/app/lost-and-found-crew/id6742314679"},
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.lostandfoundcrew"},
+      {label:"↗ Case Study",url:"https://www.empyrealinfotech.com/case-studies/lost-and-found",primary:true}
+    ]
+  },
+  lotusx:{
+    name:"LotusX — Crypto Exchange",icon:'<img src="assets/logo/lotusx.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#f5a623",
+    category:"Fintech · Cryptocurrency Exchange",
+    tagline:"Full-featured crypto exchange for Bitcoin and digital assets with real-time order books.",
+    description:"LotusX is a regulated cryptocurrency exchange offering spot trading for Bitcoin and other digital assets. The mobile app features real-time order books, candlestick charting, secure wallet integration with biometric auth, and a simplified onboarding flow designed to lower the barrier for first-time crypto users while meeting KYC compliance requirements.",
+    timeline:"2023",platform:"iOS & Android",stack:["Flutter","Node.js","WebSockets","Blockchain APIs","KYC Integration"],
+    features:["Real-time order books via WebSocket","Spot trading with limit and market orders","Biometric-secured wallet","KYC/AML compliant onboarding","Candlestick and portfolio charting","Push alerts for price targets"],
+    screenshots:["assets/screenshots/lotusx/1.jpg","assets/screenshots/lotusx/2.jpg","assets/screenshots/lotusx/3.jpg","assets/screenshots/lotusx/4.jpg","assets/screenshots/lotusx/5.jpg","assets/screenshots/lotusx/6.jpg","assets/screenshots/lotusx/7.jpg","assets/screenshots/lotusx/8.jpg","assets/screenshots/lotusx/9.jpg"],
+    links:[
+      {label:"⬡ App Store",url:"https://apps.apple.com/in/app/lotusx-buy-bitcoin-crypto/id6449375786"},
+      {label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.lotusx.global"},
+      {label:"↗ lotusx.global",url:"https://lotusx.global/"}
+    ]
+  },
+  loom:{name:"Loom",icon:'<img src="assets/logo/loom.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#a89fff",category:"Consumer · Fashion · AI",tagline:"Fashion redesign marketplace connecting you with 100+ vetted designers to reimagine your unworn clothes.",description:"Loom connects you with a community of 100+ vetted fashion designers to redesign your unworn clothes. Upload a photo of the item you want to transform and Loom matches you with designers based on your style and location. Dye, alter, or completely reimagine your clothes — turn a leather skirt into a bag, redesign your wedding dress, customise your jeans. Browse designers, save favourites, and chat directly to create your dream wardrobe. Step-by-step: post your project, get inspired by bespoke design ideas, approve your favourite concept, send your item, track the transformation, and receive your one-of-a-kind piece.",timeline:"2024",platform:"iOS & Android",stack:["Flutter","Node.js","OpenAI Vision","Firebase"],features:["Connect with 100+ vetted fashion designers and artisans","Upload any unworn item and get matched by style and location","Dye, alter, embroider, or completely redesign your clothes","Specialised flows: bridal redesign, leather upcycling, denim customisation","Browse designer portfolios and save favourites","In-app direct chat with your chosen designer","6-step transformation flow: post → inspired → approve → send → track → enjoy","Follow the transformation process live through the app"],screenshots:["assets/screenshots/loom/1.jpg","assets/screenshots/loom/2.jpg","assets/screenshots/loom/3.jpg","assets/screenshots/loom/4.jpg","assets/screenshots/loom/5.jpg","assets/screenshots/loom/6.jpg","assets/screenshots/loom/7.jpg","assets/screenshots/loom/8.jpg","assets/screenshots/loom/9.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/us/app/loom-redesign-your-wardrobe/id6738835932"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.loomapp"}]},
+  sinq:{name:"Sinq",icon:'<img src="assets/logo/sinq.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#a89fff",category:"Construction · Field Reporting",tagline:"The essential mobile companion to the SINQ web platform for onsite issue reporting.",description:"SINQ is the essential mobile companion to the SINQ web platform, designed to streamline onsite issue reporting for construction professionals. Whether you're a subcontractor, site manager, or contractor, SINQ enables you to log and track variations, discrepancies, and issues directly from your phone, ensuring real-time communication with your project team. This app is available exclusively to registered SINQ customers with an existing SINQ.co.uk account.",timeline:"2024",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase","Geolocation"],features:["Instant issue logging while onsite","Seamless sync to the SINQ web platform for admin approval","Live status updates as issues move through review","Improved collaboration and stakeholder visibility","Secure login with existing SINQ.co.uk account"],screenshots:["assets/screenshots/sinq/1.jpg","assets/screenshots/sinq/2.jpg","assets/screenshots/sinq/3.jpg","assets/screenshots/sinq/4.jpg","assets/screenshots/sinq/5.jpg","assets/screenshots/sinq/6.jpg","assets/screenshots/sinq/7.jpg"],links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.sinq"},{label:"⬡ App Store",url:"https://apps.apple.com/us/app/sinq/id6741070388"}]},
+  freefree:{name:"FreeFree",icon:'<img src="assets/logo/freefree.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"transparent",iconColor:"#5eead4",category:"Consumer · Marketplace · Circular Economy",tagline:"Award-winning global membership platform for consciousness, meditation, and leadership — recognised by the UN, Forbes, and Glamour.",description:"FF World Club is an award-winning global membership platform empowering people to free themselves from within through consciousness practices, meditation, and artistic experiences. Members join weekly Free Free methodology® classes, access exclusive freedom tools, learn from award-winning experts, and connect with a global community of leaders. The FF World ecosystem spans four continents with collaborations including Fortune 500 companies, Harvard University, and the Brazilian Department of Justice. Recognised by the UN, Forbes, and Glamour.",timeline:"2023",platform:"Android",stack:["Flutter","Node.js","Firebase","Geolocation"],features:["Weekly Free Free methodology® consciousness and meditation classes","Select your interests and passions for a personalised journey","Morning rituals and guided meditation sessions","Connect with a global community of conscious leaders","Experiences hub — masterclasses, events, and past sessions","Membership subscription management (monthly/yearly)","Discover Impacts dashboard — track collective community reach","Create Your Clan and mentorship tools"],screenshots:["assets/screenshots/freefree/1.jpg","assets/screenshots/freefree/2.jpg","assets/screenshots/freefree/3.jpg","assets/screenshots/freefree/4.jpg","assets/screenshots/freefree/5.jpg","assets/screenshots/freefree/6.jpg","assets/screenshots/freefree/7.jpg","assets/screenshots/freefree/8.jpg"],links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.freefree"},{label:"↗ Case Study",url:"https://www.empyrealinfotech.com/case-studies/free-free-world"}]},
+  worktogether:{name:"Work Together",icon:'<img src="assets/logo/worktogether.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#000",iconColor:"#fca5a5",category:"Consumer · Professional Network",tagline:"Truly anonymous community for honest work conversations.",description:"Together is the safest place on the internet to talk salaries, career decisions, negotiations, company policies, and everything work that truly matters. Built with Zero Knowledge Proof, a crypto verification protocol, it keeps members anonymous even from the platform itself. Join a community built with employees of Swiggy, Zomato, Cred, Flipkart, Meesho, Udaan, Unacademy, Byju's, and more.",timeline:"2023",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase","Zero Knowledge Proofs (ZK)"],features:["Anonymous connection and sharing within the community","Salary benchmarking against peers","Honest, unfiltered answers to work questions","Industry insights from professionals across the spectrum","Real-time alerts on fundraises, layoffs, hiring, and market events","Private internal channels for individual organizations"],screenshots:["assets/screenshots/worktogether/1.png","assets/screenshots/worktogether/2.jpg","assets/screenshots/worktogether/3.jpg","assets/screenshots/worktogether/4.jpg","assets/screenshots/worktogether/5.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/us/app/together-techs-anon-network/id6455621588"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=io.worktogether.app"}]},
+  beanthere:{name:"Bean There — Camping",icon:'<img src="assets/logo/beanthere.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#000",iconColor:"#6ee7b7",category:"Consumer · Outdoor & Travel",tagline:"Exclusive campsite discovery app for Bean Trailer owners.",description:"BeanThere is an exclusive app designed for Bean Trailer owners, enabling comfortable, spontaneous camping. Members search for and rank nearby campsites, browse via map or list view, and explore detailed campsite pages with photos, descriptions, amenities, and activities. Users can submit new campsites to the community, track their Bean Rank among other owners, and manage their profile and settings.",timeline:"2022",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase","Maps API"],features:["Campsite search with 1-5 star community ratings","Map view and list view of nearby, favorited, and top-ranked sites","Detailed campsite pages with photos, descriptions, amenities, and activities","Create and submit new campsites with location pinning","Community Bean Rank leaderboard and profile settings"],screenshots:["assets/screenshots/beanthere/1.jpg","assets/screenshots/beanthere/2.jpg","assets/screenshots/beanthere/3.jpg","assets/screenshots/beanthere/4.jpg","assets/screenshots/beanthere/5.jpg","assets/screenshots/beanthere/6.jpg","assets/screenshots/beanthere/7.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/bean-there-camping/id1598634935"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.beanthereapp"}]},
+  brandkit:{name:"BrandKit",icon:'<img src="assets/logo/brandkit.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#fff",iconColor:"#fca5a5",category:"Consumer · Marketing Tools",tagline:"Festival and promotional post maker for businesses, no designer needed.",description:"BrandKit helps businesses create festival and promotional posts to boost their brand without hiring an expensive graphic designer. After a quick setup with logo and business details, users can browse a huge library of ready-made designs across categories like festival greetings, quotes, custom posts, and devotional content, then customise and share them in a few taps.",timeline:"2022",platform:"iOS & Android",stack:["Flutter","FFmpeg","Node.js","Firebase"],features:["Downloadable festival & special-day images and videos with your business details","Custom political, product, and personal photo frames","Trending posts for national causes and current events","Curated leader, motivational, business, and devotional quotes","Editable custom post templates for birthdays, offers, and announcements","Automatic brand template setup from your logo and business details"],screenshots:["assets/screenshots/brandkit/1.jpg","assets/screenshots/brandkit/2.jpg","assets/screenshots/brandkit/3.jpg","assets/screenshots/brandkit/4.jpg","assets/screenshots/brandkit/5.jpg","assets/screenshots/brandkit/6.jpg","assets/screenshots/brandkit/7.jpg","assets/screenshots/brandkit/8.jpg"],links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.brandkit.post"},{label:"⬡ App Store",url:"https://apps.apple.com/in/app/brandkit-post-video-maker/id1639090890"}]},
+  pulpit:{name:"Pulpit Partner (Driver)",icon:'<img src="assets/logo/pulpit.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#fff",iconColor:"#5eead4",category:"Logistics · Ride-Sharing",tagline:"India's commission-free ride-hailing and cab booking platform.",description:"Pulpit Mobility is a reliable ride-hailing and online cab booking app for India that charges no commission on driver earnings. The platform covers city transport cabs, car rentals, airport transfers, local rides, and outstation trips, working toward unifying every mode of transportation under a single taxi booking app while keeping rides affordable for everyone.",timeline:"2023",platform:"iOS & Android",stack:["Flutter","Node.js","Google Maps","Firebase","Stripe"],features:["Zero commission on driver and partner earnings","City, outstation, and hourly ride bidding to negotiate fair pricing","Direct cab booking alongside local and outstation options","24x7 support so drivers and riders are never stuck","Secure payments and verified professional drivers","Full-time and part-time driving flexibility"],screenshots:["assets/screenshots/pulpit/1.jpg","assets/screenshots/pulpit/2.jpg","assets/screenshots/pulpit/3.jpg","assets/screenshots/pulpit/4.jpg","assets/screenshots/pulpit/5.jpg","assets/screenshots/pulpit/6.jpg","assets/screenshots/pulpit/7.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/pulpit-partner/id6444733582"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.pulpit.travel_driver_pulpit"}]},
+  pulpituser:{name:"Pulpit User",icon:'<img src="assets/logo/pulpituser.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#000",iconColor:"#fde68a",category:"Logistics · Consumer · Ride Booking",tagline:"Supermarket-of-rides passenger app — compare options and track in real time.",description:"Pulpit User is the passenger side of the Pulpit multi-modal transport marketplace. Passengers enter a destination, see options across multiple transport categories with fares and ETAs side by side, book, and track their ride live on a map.",timeline:"2023",platform:"iOS & Android",stack:["Flutter","Node.js","Google Maps","Firebase","Stripe"],features:["Multi-modal transport comparison in one search","Live driver tracking on map","Fare transparency with total-cost breakdown","In-app wallet and payment management","Trip history and receipts"],screenshots:["assets/screenshots/pulpituser/1.jpg","assets/screenshots/pulpituser/2.jpg","assets/screenshots/pulpituser/3.jpg","assets/screenshots/pulpituser/4.jpg","assets/screenshots/pulpituser/5.jpg","assets/screenshots/pulpituser/6.jpg","assets/screenshots/pulpituser/7.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/pulpit-supermarket-of-rides/id6444613022"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.pulpit.pulpit_customer"}]},
+  towerland:{name:"TöwerLand Express",icon:'<img src="assets/logo/towerland.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#1a7fb3",iconColor:"#a89fff",category:"Logistics · Ferry / Transit",tagline:"Fast, frequent ferry service from Norddeich to the North Sea island of Juist.",description:"TöwerLand Express connects Norddeich to Juist, the most beautiful sandbank in the world, in just 45 minutes. Depending on the day and season, the boats make up to 22 crossings a day on the Norddeich <> Juist route. Thanks to smaller, more flexible boats, TöwerLand Express travels more often and lets passengers experience the World Heritage Wadden Sea as close and pure as never before.",timeline:"2020",platform:"iOS & Android",stack:["Flutter","Node.js","Timetable APIs","Firebase","Stripe"],features:["Up to 22 daily crossings between Norddeich and Juist","45-minute crossing time to the island","Live timetables with available seats at a glance","Book tickets with passenger count and extras in a few taps","Manage, rebook, or cancel bookings directly in the app","Full booking history and digital ticket overview"],screenshots:["assets/screenshots/towerland/1.jpg","assets/screenshots/towerland/2.jpg","assets/screenshots/towerland/3.jpg","assets/screenshots/towerland/4.jpg","assets/screenshots/towerland/5.jpg","assets/screenshots/towerland/6.jpg","assets/screenshots/towerland/7.jpg","assets/screenshots/towerland/8.jpg","assets/screenshots/towerland/9.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/t%C3%B6werland-express/id1481947676"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=ag.conit.te_juist"}]},
+  dlt:{name:"DLT Token Wallet",icon:'<img src="assets/logo/dlt.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#000",iconColor:"#5eead4",category:"Fintech · Blockchain · Crypto Wallet",tagline:"Take control of your digital assets — the secure, non-custodial gateway to Web3.",description:"DLT Wallet is a full-featured, non-custodial crypto wallet built to give both new and experienced investors complete control over their digital assets in one seamless app. Rather than trusting a third party with sensitive data, the wallet runs on a decentralized architecture where every transaction happens directly on-chain — Anthropic never holds a user's private keys or funds. Beyond simple send/receive, users can interact with smart contracts to join token sales, staking, and governance, and can bridge across multiple blockchain networks for true cross-chain interoperability. The app also integrates with leading hardware wallets for offline key storage, ships with in-app educational resources on crypto and blockchain, and is backed by an open, community-driven development process and responsive customer support — all wrapped in a product that ships continuous security and feature updates.",timeline:"2023",platform:"Android",stack:["Flutter","Web3","Blockchain Node APIs","Biometric Auth","AES-256"],features:["Non-custodial — user holds private keys, never a third party","Decentralized architecture for on-chain privacy and security","Smart contract interaction — token sales, staking, governance","Cross-chain compatibility across multiple blockchain networks","Hardware wallet integration for offline key storage","In-app educational resources on crypto and blockchain","Community-driven, open development with responsive support","Continuous updates with new features and security enhancements"],screenshots:["assets/screenshots/dlt/1.jpg","assets/screenshots/dlt/2.png","assets/screenshots/dlt/3.png","assets/screenshots/dlt/4.png","assets/screenshots/dlt/5.png","assets/screenshots/dlt/6.png","assets/screenshots/dlt/7.png","assets/screenshots/dlt/8.png","assets/screenshots/dlt/9.png"],links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.dltwalletapp"},{label:"⬡ App Store",url:"https://apps.apple.com/us/app/dlt-wallet-i-nfts-crypto/id6466737727"},{label:"↗ dlttoken.io",url:"https://dlttoken.io/"}]},orse:{name:"ORSE Crypto Wallet",icon:'<img src="assets/logo/orse.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#000",iconColor:"#c7c740",category:"Fintech · GameFi · Crypto Wallet",tagline:"Your gateway to gaming and blockchain — decentralized, gasless, and built for players.",description:"ORSE Wallet is a decentralized crypto wallet purpose-built for gamers and blockchain enthusiasts, serving as the gateway into the ORSEGAMES ecosystem. It unifies in-game rewards, gaming NFTs, and ORSE token holdings in a single, secure, non-custodial app. Players can make in-game purchases, trade and showcase NFTs, track play-to-earn (P2E) earnings, and stake tokens for passive rewards — all with gasless, instant transactions across every game in the ORSEGAMES ecosystem. Private keys stay on-device, giving users full control over their funds, while quick onboarding gets new players set up in minutes.",timeline:"2024",platform:"iOS & Android",stack:["Web3","Blockchain Node APIs","Smart Contracts","NFT Standards","Non-Custodial Key Storage"],features:["In-game asset management across the ORSEGAMES ecosystem","Gaming NFT support — store, trade, and showcase items","Play-to-earn (P2E) reward tracking with gas-free withdrawals","Cross-game wallet — one wallet, every game in the ecosystem","Gasless transactions for purchases and token transfers","Secure private-key storage — non-custodial by design","ORSE token staking with passive rewards","Quick onboarding — a ready-to-use wallet in minutes"],screenshots:["assets/screenshots/orse/1.png","assets/screenshots/orse/2.png"],links:[{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.orse"},{label:"⬡ App Store",url:"https://apps.apple.com/us/app/orse-crypto-wallet/id6746813684"}]},ck:{name:"CK Crypto Wallet",icon:'<img src="assets/logo/ck.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#000",iconColor:"#4dd0c8",category:"Fintech · Crypto Wallet",tagline:"A secure, intuitive wallet for storing and managing your BEP-20 tokens.",description:"CinemaKoin (CK Crypto Wallet) is a user-friendly cryptocurrency wallet built for anyone who wants to securely store and manage their digital assets. It supports sending and receiving all kinds of BEP-20 tokens, and lets users easily track their portfolio while monitoring the real-time value of their holdings. Live market data and price alerts keep users informed of the latest trends without needing to check a separate exchange. Security is built in from the ground up: advanced encryption protects private keys so that only the user has access to their funds, verified via email, while multi-factor authentication and biometric security add further layers of protection against unauthorized access. Whether a seasoned investor or someone brand new to crypto, CK Crypto Wallet offers an intuitive, secure way to manage digital assets from a single app.",timeline:"2023",platform:"Mobile",stack:["Web3","BEP-20 / BSC","Encryption","Biometric Auth","Market Data APIs"],features:["Send and receive all kinds of BEP-20 tokens","Portfolio tracking with real-time market data","Price alerts to stay on top of market trends","Advanced encryption protecting private keys","Email-verified, non-custodial access to funds","Multi-factor authentication for account security","Biometric security to prevent unauthorized access","Intuitive design for beginners and experienced investors alike"],screenshots:["assets/screenshots/ck/1.png","assets/screenshots/ck/2.png","assets/screenshots/ck/3.png","assets/screenshots/ck/4.jpg","assets/screenshots/ck/5.png"],links:[]},
+  beds24:{name:"Beds24",icon:'<img src="assets/logo/beds24.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#fff",iconColor:"#5eead4",category:"Enterprise · Hospitality PMS",tagline:"Mobile companion for Beds24, the all-in-one property management and channel manager.",description:"Beds24 is one of the most cost-effective, powerful, reliable, and flexible all-in-one hospitality solutions, simplifying workflows and automating tasks. The multi-award-winning software is used by small to medium hotels, B&Bs, vacation rentals, and property managers with up to hundreds of properties. This mobile app is the on-the-go companion for a Beds24 account, letting hosts manage bookings, arrivals, and departures away from the desk.",timeline:"2022",platform:"iOS & Android",stack:["Flutter","Beds24 REST API","Firebase","Push Notifications"],features:["Manage bookings, arrivals, and departures on the go","Multi-property support for vacation rentals, hotel-type inventory, and dorms","API messaging with Airbnb and Booking.com","View availability and manually add bookings","Two-way channel manager sync with 60+ OTAs including Airbnb, Booking.com, Expedia, and VRBO","Preferred Partner status with leading OTAs for premium support and API tools"],screenshots:["assets/screenshots/beds24/1.png","assets/screenshots/beds24/2.jpg","assets/screenshots/beds24/3.png","assets/screenshots/beds24/4.png","assets/screenshots/beds24/5.jpg","assets/screenshots/beds24/6.png","assets/screenshots/beds24/7.png","assets/screenshots/beds24/8.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/beds24/id1637083171"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.beds24"},{label:"↗ beds24.com",url:"https://beds24.com/"}]},
+  bellelon:{name:"Bellelon",icon:'<img src="assets/logo/bellelon.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#fff",iconColor:"#fde68a",category:"Consumer · Beauty Marketplace · Dual-Sided",tagline:"Fast, reliable beauty services at home or in a salon.",description:"Bellelon connects you with top beauty salons, barbers, and home-based beauticians, offering a comprehensive range of services at your convenience. From grooming for men and women, facials, and makeup, to hair coloring, styling, haircuts, bridal makeup, piercing, tattoos, nail art, henna art, manicures, pedicures, and much more, Bellelon has it all. Easily browse thousands of beauty professionals and book appointments instantly, choosing the flexibility of home services or a salon visit.",timeline:"2022",platform:"Android",stack:["Flutter","Node.js","Firebase","Stripe","Calendar APIs"],features:["Browse thousands of beauty professionals nearby","Book at-home or in-salon appointments instantly","Wide range of services: grooming, facials, makeup, hair, nails, henna, and more","Bridal makeup, piercing, and tattoo bookings","Instant appointment scheduling with real-time slots","Affordable, transparent pricing across service categories"],screenshots:["assets/screenshots/bellelon/1.jpg","assets/screenshots/bellelon/2.jpg","assets/screenshots/bellelon/3.jpg","assets/screenshots/bellelon/4.jpg","assets/screenshots/bellelon/5.jpg","assets/screenshots/bellelon/6.jpg"],links:[{label:"▶ Consumer App",url:"https://play.google.com/store/apps/details?id=com.bellelon.consumer"},{label:"▶ Business App",url:"https://play.google.com/store/apps/details?id=com.bellelon.business"}]},
+  naturalaqua:{name:"Natural Aqua",icon:'<img src="assets/logo/naturalaqua.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#fff",iconColor:"#5eead4",category:"Consumer · Health & Wellness",tagline:"Smart hydration reminders to help you drink enough water every day.",description:"NaturalAqua reminds you throughout the day to drink enough water, helping you boost your performance and stay vital. The app calculates your personal daily hydration target from your profile, goals, and even the weather, then nudges you with reminders and lets you log intake with a single tap.",timeline:"2021",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase"],features:["Personalized daily water goal based on profile, activity, and weather","Smart reminders throughout the day to stay on track","One-tap logging of water intake by amount","Detailed drink history by day","Weekly, monthly, and yearly hydration reports","Water filter tracker with replacement reminders"],screenshots:["assets/screenshots/naturalaqua/1.jpg","assets/screenshots/naturalaqua/2.jpg","assets/screenshots/naturalaqua/3.jpg","assets/screenshots/naturalaqua/4.jpg","assets/screenshots/naturalaqua/5.jpg","assets/screenshots/naturalaqua/6.jpg","assets/screenshots/naturalaqua/7.jpg","assets/screenshots/naturalaqua/8.jpg","assets/screenshots/naturalaqua/9.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/naturalaqua/id1583036162"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.naturalaquaapp"}]},
+  riva:{name:"Riva",icon:'<img src="assets/logo/riva.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">',iconBg:"#fff",iconColor:"#a89fff",category:"Consumer · Health & Wellness",tagline:"Hydration reminders that help you drink enough water every day.",description:"Riva reminds you to have enough drinking water throughout the day, helping you increase your performance and stay vital. Paired with Riva's water filter products, the app calculates your personal daily hydration target from your profile, goals, and weather, then nudges you with reminders and lets you log intake with a single tap.",timeline:"2021",platform:"iOS & Android",stack:["Flutter","Node.js","Firebase"],features:["Personalized daily water goal based on profile, activity, and weather","Smart reminders throughout the day to stay on track","One-tap logging of water intake by amount","Detailed drink history by day","Weekly, monthly, and yearly hydration reports","Water filter tracker with replacement reminders"],screenshots:["assets/screenshots/riva/1.jpg","assets/screenshots/riva/2.jpg","assets/screenshots/riva/3.jpg","assets/screenshots/riva/4.jpg","assets/screenshots/riva/5.jpg","assets/screenshots/riva/6.jpg","assets/screenshots/riva/7.jpg","assets/screenshots/riva/8.jpg","assets/screenshots/riva/9.jpg"],links:[{label:"⬡ App Store",url:"https://apps.apple.com/in/app/rivaapp/id1588403141"},{label:"▶ Google Play",url:"https://play.google.com/store/apps/details?id=com.riva"}]}
+};
+
+function openModal(id){
+  const a=apps[id]; if(!a)return;
+  const badges=`<span class="tag" style="font-size:12px">${a.platform}</span> ${a.timeline?`<span class="tag category" style="font-size:12px">⏱ ${a.timeline}</span>`:''}`;
+  const ssHtml = a.screenshots && a.screenshots.length>0
+    ? a.screenshots.map(s=>`<div class="screenshot-frame"><img src="${s}" alt="screenshot" onerror="this.parentElement.innerHTML='<div class=no-ss>View on store</div>'"></div>`).join('')
+    : ['','',''].map((_,i)=>`<div class="screenshot-frame"><div class="no-ss">See on App Store /<br>Play Store</div></div>`).join('');
+
+  const stackHtml=a.stack.map(s=>`<li>${s}</li>`).join('');
+  const featuresHtml=a.features.map(f=>`<li>${f}</li>`).join('');
+  const linksHtml=a.links.map(l=>`<a href="${l.url}" target="_blank" class="modal-link-btn${l.primary?' primary':''}">${l.label}</a>`).join('');
+
+  document.getElementById('modalContent').innerHTML=`
+    <div class="modal-hero">
+      <div class="badge-row"><span class="tag ai" style="font-size:11px">${a.category}</span></div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem">
+        <div class="card-icon" style="width:52px;height:52px;font-size:18px;background:${a.iconBg};color:${a.iconColor};border-radius:14px;overflow:hidden;padding:0">${a.icon}</div>
+        <div>
+          <div class="modal-title" style="font-size:1.6rem;margin:0">${a.name}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">${a.platform} &nbsp;·&nbsp; ${a.timeline||'2020–2025'}</div>
+        </div>
+      </div>
+      <div class="modal-subtitle">${a.tagline}</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.75">${a.description}</p>
+    </div>
+    <div class="screenshots-section">
+      <div class="screenshots-label">Screenshots</div>
+      <div class="screenshots-scroll">${ssHtml}</div>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px;opacity:.6">Scroll to see more · Full screenshots available on App Store / Google Play</p>
+    </div>
+    <div class="modal-details">
+      <div class="detail-card">
+        <h4>Tech Stack</h4>
+        <ul>${stackHtml}</ul>
+      </div>
+      <div class="detail-card">
+        <h4>Key Features</h4>
+        <ul>${featuresHtml}</ul>
+      </div>
+    </div>
+    <div class="modal-links">${linksHtml}</div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function closeModalOutside(e){
+  if(e.target===document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+function filterCards(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.app-card,.featured-card').forEach(card=>{
+    if(cat==='all'){card.classList.remove('hidden')}
+    else{const c=card.dataset.cat||'';c.includes(cat)?card.classList.remove('hidden'):card.classList.add('hidden')}
+  });
+}
+</script>
+</body>
+</html>
