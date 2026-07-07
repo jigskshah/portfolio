@@ -181,6 +181,50 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 @media(min-width:641px) and (max-width:1024px){
   .featured-grid{grid-template-columns:repeat(2,1fr)}
 }
+/* ===== ANIMATIONS ===== */
+@media (prefers-reduced-motion: no-preference){
+
+  /* Hero entrance */
+  .profile-card,.hero-eyebrow,.hero h1,.hero>p,.hero-stats{opacity:0;animation:heroIn .7s cubic-bezier(.22,.68,0,1) forwards}
+  .profile-card{transform:translateY(-12px);animation-delay:.02s}
+  .hero-eyebrow{transform:translateY(14px);animation-delay:.1s}
+  .hero h1{transform:translateY(18px);animation-delay:.18s}
+  .hero>p{transform:translateY(18px);animation-delay:.28s}
+  .hero-stats{transform:translateY(18px);animation-delay:.38s}
+  @keyframes heroIn{to{opacity:1;transform:translateY(0)}}
+
+  /* Scroll reveal for sections & cards */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.22,.68,0,1),transform .6s cubic-bezier(.22,.68,0,1)}
+  .reveal.in-view{opacity:1;transform:translateY(0)}
+
+  /* Card hover polish */
+  .featured-card{transition:border-color .25s,transform .3s cubic-bezier(.22,.68,0,1),box-shadow .3s}
+  .featured-card:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.28)}
+  .fc-banner{overflow:hidden}
+  .fc-banner img{transition:transform .5s cubic-bezier(.22,.68,0,1)}
+  .featured-card:hover .fc-banner img{transform:scale(1.06)}
+  .card-icon img{transition:transform .3s cubic-bezier(.22,.68,0,1)}
+  .featured-card:hover .card-icon img{transform:scale(1.08) rotate(-2deg)}
+
+  /* Filter buttons */
+  .filter-btn{transition:all .2s,transform .15s}
+  .filter-btn:active{transform:scale(.94)}
+  .filter-btn.active{animation:pop .25s cubic-bezier(.22,.68,0,1)}
+  @keyframes pop{0%{transform:scale(.9)}100%{transform:scale(1)}}
+
+  /* Modal */
+  .modal{transform:translateY(24px) scale(.98)}
+  .modal-overlay.open .modal{transform:translateY(0) scale(1)}
+  .screenshot-frame{transition:transform .3s}
+  .screenshot-frame:hover{transform:translateY(-4px)}
+
+  /* CTA button micro-interaction */
+  .cta-btn{transition:opacity .2s,transform .2s}
+  .cta-btn:hover{transform:translateY(-2px)}
+
+  /* Hero eyebrow pulse already exists via .hero-eyebrow::before */
+  .stat-num{display:inline-block}
+}
 </style>
 </head>
 <body>
@@ -1358,8 +1402,36 @@ function filterCards(cat,btn){
   document.querySelectorAll('.app-card,.featured-card').forEach(card=>{
     if(cat==='all'){card.classList.remove('hidden')}
     else{const c=card.dataset.cat||'';c.includes(cat)?card.classList.remove('hidden'):card.classList.add('hidden')}
+    if(!card.classList.contains('hidden'))card.classList.add('in-view');
   });
 }
+
+/* ===== Scroll-reveal animations ===== */
+(function(){
+  document.querySelectorAll('.grid-section .section-label').forEach(el=>el.classList.add('reveal'));
+  document.querySelectorAll('.featured-grid').forEach(grid=>{
+    Array.from(grid.children).forEach((card,i)=>{
+      card.classList.add('reveal');
+      card.style.transitionDelay=(i%3)*90+'ms';
+    });
+  });
+  document.querySelectorAll('.contact-section').forEach(el=>el.classList.add('reveal'));
+
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in-view'));
+    return;
+  }
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
 </script>
 </body>
 </html>
