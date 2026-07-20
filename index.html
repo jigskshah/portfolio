@@ -75,11 +75,33 @@ nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:b
 nav.scrolled{height:50px;background:var(--nav-bg-scrolled);box-shadow:0 8px 24px var(--shadow-md)}
 .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.5px}
 .nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:1.75rem;list-style:none}
-.nav-links a{font-size:13px;color:var(--muted);transition:color .2s;white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.nav-links li{display:flex;align-items:center}
+.nav-links a{font-size:13px;color:var(--muted);transition:color .2s;white-space:nowrap;line-height:1}
 .nav-links a:hover{color:var(--text)}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;margin:-8px;color:var(--text);align-items:center;justify-content:center}
 .nav-toggle svg{display:block}
+
+/* PROJECTS DROPDOWN (desktop) */
+.nav-item-dropdown{position:relative}
+.nav-dropdown-trigger{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:inherit;font-size:13px;line-height:1;color:var(--muted);transition:color .2s;padding:0;margin:0}
+.nav-dropdown-trigger svg{transition:transform .2s ease}
+.nav-item-dropdown:hover .nav-dropdown-trigger,.nav-dropdown-trigger[aria-expanded="true"]{color:var(--text)}
+.nav-item-dropdown:hover .nav-dropdown-trigger svg,.nav-dropdown-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);min-width:210px;background:var(--card);border:1px solid var(--border2);border-radius:12px;box-shadow:0 16px 32px var(--shadow-md);padding:6px;list-style:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:110}
+.nav-item-dropdown:hover .nav-dropdown,.nav-item-dropdown:focus-within .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(10px)}
+.nav-dropdown::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:var(--border2)}
+.nav-dropdown li a{display:block;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text);white-space:nowrap}
+.nav-dropdown li a:hover{background:var(--bg2);color:var(--accent2)}
+
+/* PROJECTS SUBMENU (mobile accordion) */
+.mobile-submenu-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 2rem;font-size:14px;color:var(--text);border-top:1px solid var(--border);background:none;border-left:none;border-right:none;border-bottom:none;font-family:inherit;cursor:pointer;text-align:left}
+.mobile-submenu-trigger svg{transition:transform .2s ease;flex-shrink:0}
+.mobile-submenu-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
+.mobile-submenu{display:flex;flex-direction:column;max-height:0;overflow:hidden;transition:max-height .25s ease;background:var(--bg2)}
+.mobile-submenu.open{max-height:500px}
+.mobile-menu .mobile-submenu a{display:block;padding:12px 2rem 12px 3rem;font-size:13.5px;color:var(--muted);border-top:1px solid var(--border)}
+.mobile-menu .mobile-submenu a:active{color:var(--accent2)}
 .theme-toggle{background:var(--bg2);border:1px solid var(--border2);cursor:pointer;padding:0;width:34px;height:34px;border-radius:100px;color:var(--text);display:inline-flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,transform .15s;flex-shrink:0}
 .theme-toggle:hover{border-color:var(--accent);transform:translateY(-1px)}
 .theme-toggle svg{display:block;transition:transform .3s ease,opacity .2s ease}
@@ -369,12 +391,20 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#enterprise">Enterprise</a></li>
-      <li><a href="#xperience">Xperience Suite</a></li>
-      <li><a href="#consumer">Consumer</a></li>
-      <li><a href="#logistics">Logistics & Transport</a></li>
-      <li><a href="#fintech">Fintech</a></li>
-      <li><a href="#ecommerce">E-Commerce & Lifestyle</a></li>
+      <li class="nav-item-dropdown">
+        <button class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          Projects
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="nav-dropdown">
+          <li><a href="#enterprise">Enterprise</a></li>
+          <li><a href="#xperience">Xperience Suite</a></li>
+          <li><a href="#consumer">Consumer</a></li>
+          <li><a href="#logistics">Logistics & Transport</a></li>
+          <li><a href="#fintech">Fintech</a></li>
+          <li><a href="#ecommerce">E-Commerce & Lifestyle</a></li>
+        </ul>
+      </li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#strengths">What I Bring</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -391,12 +421,18 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 <div class="mobile-menu-backdrop" id="mobileMenuBackdrop" onclick="closeMobileMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#experience" onclick="closeMobileMenu()">Experience</a>
-  <a href="#enterprise" onclick="closeMobileMenu()">Enterprise</a>
-  <a href="#xperience" onclick="closeMobileMenu()">Xperience Suite</a>
-  <a href="#consumer" onclick="closeMobileMenu()">Consumer</a>
-  <a href="#logistics" onclick="closeMobileMenu()">Logistics & Transport</a>
-  <a href="#fintech" onclick="closeMobileMenu()">Fintech</a>
-  <a href="#ecommerce" onclick="closeMobileMenu()">E-Commerce & Lifestyle</a>
+  <button class="mobile-submenu-trigger" id="mobileSubmenuTrigger" onclick="toggleMobileSubmenu()" aria-expanded="false">
+    Projects
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="mobile-submenu" id="mobileSubmenu">
+    <a href="#enterprise" onclick="closeMobileMenu()">Enterprise</a>
+    <a href="#xperience" onclick="closeMobileMenu()">Xperience Suite</a>
+    <a href="#consumer" onclick="closeMobileMenu()">Consumer</a>
+    <a href="#logistics" onclick="closeMobileMenu()">Logistics & Transport</a>
+    <a href="#fintech" onclick="closeMobileMenu()">Fintech</a>
+    <a href="#ecommerce" onclick="closeMobileMenu()">E-Commerce & Lifestyle</a>
+  </div>
   <a href="#skills" onclick="closeMobileMenu()">Skills</a>
   <a href="#strengths" onclick="closeMobileMenu()">What I Bring</a>
   <a href="#contact" onclick="closeMobileMenu()">Contact</a>
@@ -1670,6 +1706,16 @@ function closeMobileMenu(){
   backdrop.classList.remove('open');
   btn.setAttribute('aria-expanded','false');
   icon.innerHTML='<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>';
+  const submenu=document.getElementById('mobileSubmenu');
+  const submenuTrigger=document.getElementById('mobileSubmenuTrigger');
+  if(submenu){ submenu.classList.remove('open'); }
+  if(submenuTrigger){ submenuTrigger.setAttribute('aria-expanded','false'); }
+}
+function toggleMobileSubmenu(){
+  const submenu=document.getElementById('mobileSubmenu');
+  const trigger=document.getElementById('mobileSubmenuTrigger');
+  const isOpen=submenu.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 
 function openModal(id){
