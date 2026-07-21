@@ -88,7 +88,7 @@ nav.scrolled{height:50px;background:var(--nav-bg-scrolled);box-shadow:0 8px 24px
 .nav-dropdown-trigger svg{transition:transform .2s ease}
 .nav-item-dropdown:hover .nav-dropdown-trigger,.nav-dropdown-trigger[aria-expanded="true"]{color:var(--text)}
 .nav-item-dropdown:hover .nav-dropdown-trigger svg,.nav-dropdown-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
-.nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);min-width:210px;background:var(--card);border:1px solid var(--border2);border-radius:12px;box-shadow:0 16px 32px var(--shadow-md);padding:6px;list-style:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:110}
+.nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);min-width:210px;background:var(--nav-bg-scrolled);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--border2);border-radius:12px;box-shadow:0 16px 32px var(--shadow-md);padding:6px;list-style:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:110}
 .nav-item-dropdown:hover .nav-dropdown,.nav-item-dropdown:focus-within .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(10px)}
 .nav-dropdown::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:var(--border2)}
 .nav-dropdown li a{display:block;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text);white-space:nowrap}
@@ -98,7 +98,7 @@ nav.scrolled{height:50px;background:var(--nav-bg-scrolled);box-shadow:0 8px 24px
 .mobile-submenu-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 2rem;font-size:14px;color:var(--text);border-top:1px solid var(--border);background:none;border-left:none;border-right:none;border-bottom:none;font-family:inherit;cursor:pointer;text-align:left}
 .mobile-submenu-trigger svg{transition:transform .2s ease;flex-shrink:0}
 .mobile-submenu-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
-.mobile-submenu{display:flex;flex-direction:column;max-height:0;overflow:hidden;transition:max-height .25s ease;background:var(--bg2)}
+.mobile-submenu{display:flex;flex-direction:column;max-height:0;overflow:hidden;transition:max-height .25s ease;background:rgba(127,127,127,0.06)}
 .mobile-submenu.open{max-height:500px}
 .mobile-menu .mobile-submenu a{display:block;padding:12px 2rem 12px 3rem;font-size:13.5px;color:var(--muted);border-top:1px solid var(--border)}
 .mobile-menu .mobile-submenu a:active{color:var(--accent2)}
@@ -110,7 +110,7 @@ nav.scrolled{height:50px;background:var(--nav-bg-scrolled);box-shadow:0 8px 24px
 [data-theme="light"] .theme-toggle .icon-sun{opacity:1;transform:scale(1) rotate(0)}
 [data-theme="light"] .theme-toggle .icon-moon{opacity:0;transform:scale(.5) rotate(90deg)}
 .nav-right{display:flex;align-items:center;gap:14px}
-.mobile-menu{position:fixed;top:60px;left:0;right:0;display:flex;flex-direction:column;max-height:calc(100vh - 60px);overflow-y:auto;background:var(--card);border-bottom:1px solid var(--border);box-shadow:0 16px 32px var(--shadow-md);z-index:99;transform:translateY(-8px);opacity:0;pointer-events:none;visibility:hidden;transition:transform .2s ease,opacity .2s ease,visibility .2s}
+.mobile-menu{position:fixed;top:60px;left:0;right:0;display:flex;flex-direction:column;max-height:calc(100vh - 60px);overflow-y:auto;background:var(--nav-bg-scrolled);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--border);box-shadow:0 16px 32px var(--shadow-md);z-index:99;transform:translateY(-8px);opacity:0;pointer-events:none;visibility:hidden;transition:transform .2s ease,opacity .2s ease,visibility .2s}
 .mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;visibility:visible}
 .mobile-menu a{padding:14px 2rem;font-size:14px;color:var(--text);border-top:1px solid var(--border)}
 .mobile-menu a:active{color:var(--accent2)}
@@ -390,6 +390,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
   <div class="nav-logo">Jigar<span>.</span>portfolio</div>
   <div class="nav-right">
     <ul class="nav-links">
+      <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li class="nav-item-dropdown">
         <button class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
@@ -420,6 +421,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
 </nav>
 <div class="mobile-menu-backdrop" id="mobileMenuBackdrop" onclick="closeMobileMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobileMenu()">About</a>
   <a href="#experience" onclick="closeMobileMenu()">Experience</a>
   <button class="mobile-submenu-trigger" id="mobileSubmenuTrigger" onclick="toggleMobileSubmenu()" aria-expanded="false">
     Projects
@@ -438,7 +440,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
   <a href="#contact" onclick="closeMobileMenu()">Contact</a>
 </div>
 
-<section class="hero">
+<section class="hero" id="about">
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-eyebrow">Hello, I'm</div>
@@ -480,7 +482,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;
     </div>
     <div class="timeline-item">
       <div class="timeline-card">
-        <span class="timeline-badge">Nov 2014 – May 2022 · 7 yrs 6 mos</span>
+        <span class="timeline-badge">Nov 2018 – May 2022 · 3 yrs 7 mos</span>
         <h3>Flutter Developer &amp; Team Leader</h3>
         <div class="timeline-company">Infibrain Technologies LLP</div>
         <p class="timeline-desc">Grew from Flutter developer to team lead, building and shipping cross-platform mobile apps while guiding a growing engineering team on architecture, code quality, and delivery timelines.</p>
